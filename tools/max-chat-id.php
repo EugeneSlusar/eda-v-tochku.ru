@@ -29,10 +29,28 @@ function findChatIds($node, array &$found): void
     }
 }
 
+function apiGet(string $base, string $token, string $path): array
+{
+    $ch = curl_init($base . $path);
+    curl_setopt_array($ch, [CURLOPT_HTTPHEADER => ['Authorization: ' . $token], CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 20]);
+    $body = curl_exec($ch);
+    $status = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+    curl_close($ch);
+    return [$status, json_decode((string)$body, true) ?: [], (string)$body];
+}
+
+// Диагностика: токен и вебхуки (с активным вебхуком события приходят туда, а не сюда)
+[$status, $me, $raw] = apiGet($base, $token, '/me');
+echo $status === 200 ? 'Бот: ' . ($me['name'] ?? $me['first_name'] ?? '?') . ' (@' . ($me['username'] ?? '?') . ")\n" : "Токен не принят (HTTP $status): " . substr($raw, 0, 200) . "\n";
+[$status, $subs] = apiGet($base, $token, '/subscriptions');
+foreach ($subs['subscriptions'] ?? [] as $sub) {
+    echo 'ВНИМАНИЕ: у бота есть вебхук ' . ($sub['url'] ?? '?') . ": события идут туда, этот скрипт их не увидит.\n";
+}
+echo "Для событий из группы бот должен быть администратором группы.\n";
 echo "Жду событий... Добавьте бота в группу или напишите там сообщение. Выход: Ctrl+C\n";
 $marker = null;
 while (true) {
-    $url = $base . '/updates?timeout=30&limit=100&types=bot_added,message_created' . ($marker !== null ? '&marker=' . $marker : '');
+    $url = $base . '/updates?timeout=30&limit=100' . ($marker !== null ? '&marker=' . $marker : '');
     $ch = curl_init($url);
     curl_setopt_array($ch, [CURLOPT_HTTPHEADER => ['Authorization: ' . $token], CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 45]);
     $body = curl_exec($ch);
