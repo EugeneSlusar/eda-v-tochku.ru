@@ -1,0 +1,69 @@
+name: Render refreshed landing illustrations
+on:
+  push:
+    branches:
+      - landing/illustrations-v2-issue-1
+    paths:
+      - 'images/source-v2/**'
+      - '.github/workflows/illustrations-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install renderer
+        run: python -m pip install --disable-pip-version-check cairosvg pillow
+      - name: Render eight SVG scenes into optimized WebP
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import io
+          import cairosvg
+          from PIL import Image
+
+          targets = {
+            "hero": (1200, 1500),
+            "problem-lunch": (1200, 900),
+            "problem-organizer": (1200, 900),
+            "problem-tastes": (1200, 900),
+            "before-after": (1600, 900),
+            "inside-shelves": (1200, 900),
+            "terms-dialog": (1200, 800),
+            "lead-relax": (1200, 800),
+          }
+          for name, expected in targets.items():
+              src = Path("images/source-v2") / (name + ".svg")
+              dest = Path("images") / (name + ".webp")
+              raster = cairosvg.svg2png(url=str(src), output_width=expected[0], output_height=expected[1])
+              img = Image.open(io.BytesIO(raster)).convert("RGB")
+              assert img.size == expected, f"{name}: wrong dimensions {img.size}"
+              for quality in (91, 85, 78, 70, 60, 50, 40):
+                  img.save(dest, "WEBP", quality=quality, method=6)
+                  if dest.stat().st_size <= 250_000:
+                      break
+              assert dest.stat().st_size <= 250_000, f"{name} exceeds 250KB"
+              assert dest.stat().st_size >= 5_000, f"{name} appears blank"
+              print(f"{dest}: {img.width}x{img.height}, {dest.stat().st_size} bytes")
+          PY
+      - name: Commit updated images to feature branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add images/hero.webp images/problem-lunch.webp images/problem-organizer.webp images/problem-tastes.webp images/before-after.webp images/inside-shelves.webp images/terms-dialog.webp images/lead-relax.webp
+          if ! git diff --cached --quiet; then
+            git commit -m 'assets: render eight high-resolution illustrations'
+            git push
+          fi
