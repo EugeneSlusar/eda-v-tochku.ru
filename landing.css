@@ -191,3 +191,27 @@ h3 { margin:0 0 6px; font-size:18px; }
  .lp-grid-4 .lp-card h3 {font-size:15px}
  .lp-grid-4 .lp-card p {font-size:12px}
 }
+
+
+/* v3: mobile scroll-length tuning based on the 390px browser screenshot. */
+@media(max-width:600px) {
+ .lp-section {padding:17px 0}
+ .lp-hero {padding:16px 0}
+ .lp-hero-art .lp-hero-img {height:265px}
+ .lp-grid {margin-top:12px}
+ .lp-grid-4 {gap:8px}
+ .lp-where {margin:14px 0 0}
+ .lp-lead {margin-bottom:16px}
+ .lp-actions {margin-bottom:12px}
+ .lp-sub {margin-bottom:12px}
+ .lp-terms-layout,.lp-inside-layout {margin-top:12px}
+ .lp-terms-layout .lp-grid {gap:9px}
+ .lp-terms-layout .lp-card {padding:10px}
+ .lp-terms-layout .lp-card li {line-height:1.4}
+ .lp-faq details {margin-bottom:6px;padding:9px 12px}
+ .lp-faq p {font-size:14px}
+ .lp-chips {gap:7px}
+ .lp-lead-grid {gap:12px}
+ .lp-lead-grid .lp-img {margin-top:10px}
+ .lp-form {gap:9px}
+}
