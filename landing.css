@@ -64,3 +64,15 @@ h3 { margin:0 0 6px; font-size:18px; }
 }
 @media (max-width: 480px) { .lp-grid-4 { grid-template-columns:1fr; } }
 .lp-where { margin:32px 0 0; font-size:1.1rem; }
+.lp-grid-3 { grid-template-columns:repeat(3,1fr); }
+.lp-img { display:block; max-width:100%; height:auto; border-radius:12px; }
+.lp-hero-img { margin:0 auto; max-height:420px; width:auto; }
+.lp-card-img { margin-bottom:10px; }
+.lp-card-pic { padding:8px; }
+.lp-card-pic .lp-img { width:100%; }
+.lp-pic-wide { margin-top:20px; text-align:center; }
+.lp-lead-grid .lp-img { margin-top:16px; }
+@media (max-width: 800px) { .lp-grid-3 { grid-template-columns:1fr; } }
+.lp-card-pic .lp-img { aspect-ratio:4/3; object-fit:cover; }
+.lp-card-img { width:100%; aspect-ratio:4/3; object-fit:cover; object-position:top; }
+.lp-pic-wide .lp-img { margin:0 auto; width:auto; max-width:100%; height:auto; }
