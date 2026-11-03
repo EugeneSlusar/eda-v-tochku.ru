@@ -1,6 +1,6 @@
 <?php
 // Приём заявки с лендинга: запись в файл и отправка в группу MAX.
-// Настройки (токен бота и chat_id) лежат вне веб-корня: ../.leads/config.php
+// Настройки (токен бота и chat_id) лежат в .env в корне проекта, вне веб-корня.
 declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
@@ -23,6 +23,9 @@ function clean(string $value, int $max): string
 // Защита от формул при открытии CSV в Excel
 function csvSafe(string $value): string
 {
+    if (preg_match('/^\+[\d\s()-]+$/', $value)) {
+        return $value; // обычный телефон с плюсом
+    }
     return preg_match('/^[=+\-@]/', $value) ? "'" . $value : $value;
 }
 
@@ -35,17 +38,34 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     reply(405, ['ok' => false, 'error' => 'method_not_allowed']);
 }
 
-$dataDir = getenv('LEADS_DIR') ?: dirname(__DIR__) . '/.leads';
-if (!is_dir($dataDir) && !@mkdir($dataDir, 0750, true) && !is_dir($dataDir)) {
-    reply(500, ['ok' => false, 'error' => 'storage_unavailable']);
+// Настройки читаются из .env в корне проекта (рядом с public_html, вне веб-корня)
+function loadEnv(string $file): array
+{
+    $env = [];
+    if (!is_file($file)) {
+        return $env;
+    }
+    foreach (file($file, FILE_IGNORE_NEW_LINES) ?: [] as $line) {
+        $line = trim($line);
+        if ($line === '' || $line[0] === '#' || strpos($line, '=') === false) {
+            continue;
+        }
+        [$key, $value] = explode('=', $line, 2);
+        $value = trim($value);
+        if (strlen($value) >= 2 && ($value[0] === '"' || $value[0] === "'") && substr($value, -1) === $value[0]) {
+            $value = substr($value, 1, -1);
+        }
+        $env[trim($key)] = $value;
+    }
+    return $env;
 }
 
-$config = [];
-if (is_file($dataDir . '/config.php')) {
-    $loaded = require $dataDir . '/config.php';
-    if (is_array($loaded)) {
-        $config = $loaded;
-    }
+$env = loadEnv(getenv('ENV_FILE') ?: dirname(__DIR__) . '/.env');
+$setting = static fn(string $key, string $default = ''): string => (string)($env[$key] ?? (getenv($key) ?: $default));
+
+$dataDir = $setting('LEADS_DIR', dirname(__DIR__) . '/.leads');
+if (!is_dir($dataDir) && !@mkdir($dataDir, 0750, true) && !is_dir($dataDir)) {
+    reply(500, ['ok' => false, 'error' => 'storage_unavailable']);
 }
 
 // Ловушка для ботов: поле скрыто от людей. Делаем вид, что всё хорошо.
@@ -123,10 +143,10 @@ if (!$saved) {
 
 // 2. Отправка в группу MAX (обычным текстом, без разметки)
 $sent = false;
-$token  = (string)($config['max_token'] ?? '');
-$chatId = (string)($config['max_chat_id'] ?? '');
+$token  = $setting('MAX_BOT_TOKEN');
+$chatId = $setting('MAX_CHAT_ID');
 if ($token !== '' && $chatId !== '' && function_exists('curl_init')) {
-    $base = rtrim((string)($config['max_api_base'] ?? 'https://platform-api2.max.ru'), '/');
+    $base = rtrim($setting('MAX_API_BASE', 'https://platform-api2.max.ru'), '/');
     $text = "Новая заявка с сайта\n"
         . "Компания: {$company}\n"
         . "Телефон: {$phone}\n"
@@ -140,8 +160,8 @@ if ($token !== '' && $chatId !== '' && function_exists('curl_init')) {
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT        => 8,
     ];
-    if (!empty($config['ca_bundle'])) {
-        $opts[CURLOPT_CAINFO] = (string)$config['ca_bundle'];
+    if ($setting('MAX_CA_BUNDLE') !== '') {
+        $opts[CURLOPT_CAINFO] = $setting('MAX_CA_BUNDLE');
     }
     curl_setopt_array($ch, $opts);
     $response = curl_exec($ch);

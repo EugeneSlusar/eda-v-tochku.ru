@@ -1,13 +1,17 @@
 <?php
 // Помощник: находит chat_id группы MAX.
-// 1) Добавьте бота в группу. 2) Запустите: php tools/max-chat-id.php ТОКЕН_БОТА
+// 1) Добавьте бота в группу. 2) Запустите: php tools/max-chat-id.php [ТОКЕН_БОТА] (токен можно взять из MAX_BOT_TOKEN в .env)
 // 3) Напишите в группе любое сообщение (или добавьте бота заново). Скрипт выведет chat_id.
 // Нужен PHP с расширением curl. Если на токене включён webhook (POST /subscriptions), long polling не работает.
 declare(strict_types=1);
 
 $token = $argv[1] ?? getenv('MAX_BOT_TOKEN') ?: '';
+$envFile = dirname(__DIR__) . '/.env';
+if ($token === '' && is_file($envFile) && preg_match('/^MAX_BOT_TOKEN=(.*)$/m', (string)file_get_contents($envFile), $m)) {
+    $token = trim($m[1], " \t\"'\r");
+}
 if ($token === '') {
-    fwrite(STDERR, "Использование: php tools/max-chat-id.php ТОКЕН_БОТА\n");
+    fwrite(STDERR, "Использование: php tools/max-chat-id.php [ТОКЕН_БОТА] (или MAX_BOT_TOKEN в .env)\n");
     exit(1);
 }
 $base = getenv('MAX_API_BASE') ?: 'https://platform-api2.max.ru';
