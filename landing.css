@@ -126,10 +126,10 @@ h3 { margin:0 0 6px; font-size:18px; }
 .lp-illustration-copy p {font-size:14px;line-height:1.4}
 .lp-compare-grid {margin-top:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
 .lp-compare-card {margin:0}
-.lp-compare-media {aspect-ratio:4/3;overflow:hidden}
-.lp-compare-media .lp-img {width:100%;height:100%;aspect-ratio:4/3;object-fit:cover;border-radius:0}
-.lp-compare-before {object-position:left center}
-.lp-compare-after {object-position:right center}
+/* пока одна общая картинка: левая и правая половины; убрать, когда появятся before.webp и after.webp */
+.lp-compare-media {position:relative;aspect-ratio:4/3;overflow:hidden}
+.lp-compare-media .lp-img {position:absolute;top:0;left:0;width:200%;max-width:none;height:100%;aspect-ratio:auto;object-fit:cover;border:0;border-radius:0}
+.lp-compare-media .lp-compare-after {left:-100%}
 .lp-compare-card figcaption {padding:12px 14px;line-height:1.4;font-size:14px;min-height:54px;background:#f7ece6;color:#354359}
 .lp-compare-card:last-child figcaption {background:#e5f5e9;color:#135e3c}
 .lp-inside-layout {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;gap:22px;margin-top:18px}
