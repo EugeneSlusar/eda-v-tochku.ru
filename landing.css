@@ -80,3 +80,32 @@ h3 { margin:0 0 6px; font-size:18px; }
 .lp-form .lp-check { display:flex; gap:8px; align-items:flex-start; font-size:13px; color:#cbd5e1; }
 .lp-form .lp-check input { margin-top:3px; width:auto; }
 .lp-form button:disabled { opacity:.6; cursor:wait; }
+
+/* Graphic showcase — task #1 */
+.lp-hero-art {display:block;padding:0;border:0;border-radius:22px;background:transparent;overflow:hidden;box-shadow:0 18px 46px rgba(23,70,82,.14)}
+.lp-hero-img {width:100%;max-height:none;height:auto;aspect-ratio:4/3;object-fit:cover;margin:0}
+.lp-benefits-visual {padding-bottom:32px}
+.lp-benefits-visual .lp-img {width:100%;max-height:340px;aspect-ratio:16/9;object-fit:cover;border-radius:18px;box-shadow:0 12px 36px rgba(23,70,82,.12)}
+.lp-card-img {width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:center;margin-bottom:14px;border-radius:12px}
+.lp-pic-wide .lp-img[src*="inside-fridge"] {width:100%;max-height:430px;aspect-ratio:16/9;object-fit:cover;border-radius:18px}
+@media(max-width:800px){
+ .lp-hero-art{max-width:600px;margin:0 auto}
+ .lp-benefits-visual .lp-img{max-height:none}
+ .lp-card-img{aspect-ratio:4/3}
+}
+@media(max-width:480px){
+ .lp-hero{padding:30px 0}
+ .lp-card-img{aspect-ratio:16/10}
+ .lp-benefits-visual{padding-bottom:22px}
+}
+@media(prefers-color-scheme:dark){
+ :root {--lp-ink:#e8f5f2;--lp-muted:#b8c8ce;--lp-green:#20bb91;--lp-green-dark:#23cfa6;--lp-bg:#0f1d2a;--lp-alt:#172a38;--lp-line:#38505b}
+ .lp-header {background:rgba(15,29,42,.96)}
+ .lp-hero {background:linear-gradient(180deg,#183142,#0f1d2a)}
+ .lp-card,.lp-chip,.lp-faq details{background:#1d3444}
+ .lp-btn-ghost{background:#1d3444;color:#d0fff2}
+ .lp-btn-ghost:hover{background:#2a4958}
+ .lp-lead-box{background:#091724}
+ .lp-form input{background:#203748;color:#f9fbfa;border-color:#54707a}
+ .lp-pending{background:#5c4227;color:#ffdfa8}
+}
