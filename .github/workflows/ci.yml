@@ -21,3 +21,13 @@ jobs:
           grep -q 'href="landing.css"' index.html
           ! grep -q 'app/' index.html
           ! grep -Eq '\+7[ 0-9()-]{9,}|@[a-z0-9.-]+\.[a-z]{2,}' index.html || { echo "В странице найден телефон или email: проверьте, что это публичный контакт"; exit 1; }
+          # Issue #1: verify generated artwork is present and performant.
+          for name in hero-fridge inside-fridge office-benefits use-factory use-business-center use-clinic use-warehouse; do
+            asset="images/${name}.webp"
+            test -s "$asset" || { echo "Missing image $asset"; exit 1; }
+            [[ "$(file -b --mime-type "$asset")" == "image/webp" ]] || { echo "$asset is not WebP"; exit 1; }
+            bytes=$(wc -c < "$asset")
+            (( bytes <= 300000 )) || { echo "$asset is too large: $bytes"; exit 1; }
+            grep -q "src=\"$asset\"" index.html || { echo "$asset not connected"; exit 1; }
+          done
+          ! grep -q 'Здесь будет фото холодильника' index.html
