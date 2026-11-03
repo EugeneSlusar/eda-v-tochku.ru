@@ -1,0 +1,54 @@
+name: Generate smart-fridge visuals
+on:
+  push:
+    branches: [landing/graphics-issue-1]
+    paths:
+      - 'images/*.svg'
+      - '.github/workflows/graphics.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image conversion dependencies
+        run: python -m pip install --disable-pip-version-check pillow cairosvg
+      - name: Produce WebP files (max 300KB each)
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import cairosvg
+          import io
+          names = ['hero-fridge','inside-fridge','office-benefits','use-factory','use-business-center','use-clinic','use-warehouse']
+          for name in names:
+              source = Path('images') / (name+'.svg')
+              dest = source.with_suffix('.webp')
+              raw = cairosvg.svg2png(url=str(source))
+              picture = Image.open(io.BytesIO(raw)).convert('RGB')
+              for q in (82,74,65,55,45,35):
+                  picture.save(dest,'WEBP',quality=q,method=6)
+                  if dest.stat().st_size <= 300_000:
+                      break
+              assert dest.stat().st_size <= 300_000, f'{dest}: too large'
+              assert picture.width >= 900, f'{dest}: too narrow'
+              print(dest, picture.size, dest.stat().st_size)
+          PY
+      - name: Add generated WebP to the feature branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add images/*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m 'assets: generate responsive WebP illustrations [skip ci]'
+            git push
+          fi
