@@ -63,3 +63,4 @@ h3 { margin:0 0 6px; font-size:18px; }
     .lp-nav { display:none; } .lp-header .lp-btn { margin-left:auto; }
 }
 @media (max-width: 480px) { .lp-grid-4 { grid-template-columns:1fr; } }
+.lp-where { margin:32px 0 0; font-size:1.1rem; }
