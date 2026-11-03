@@ -1,0 +1,23 @@
+name: Проверка страницы
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Проверить файлы и ссылки
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in index.html landing.css favicon.png CNAME; do test -s "$f" || { echo "Нет файла $f"; exit 1; }; done
+          grep -q '<h1>' index.html
+          grep -q 'href="landing.css"' index.html
+          ! grep -q 'app/' index.html
+          ! grep -Eq '\+7[ 0-9()-]{9,}|@[a-z0-9.-]+\.[a-z]{2,}' index.html || { echo "В странице найден телефон или email: проверьте, что это публичный контакт"; exit 1; }
