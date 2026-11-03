@@ -13,4 +13,4 @@
 
 - Изменения — в ветках `landing/<задача>` и через PR; сливает в `main` владелец.
 - Секреты и персональные данные в репозиторий не коммитить.
-- Структура на сервере: репозиторий лежит в `~/eda-v-tochku.ru`, а веб-корень сайта — `~/eda-v-tochku.ru/public_html`. После обновления репозитория деплой копирует `index.html`, `landing.css`, `favicon.png`, `robots.txt` в `public_html` (папку можно переопределить секретом `PUBLISH_DIR`).
+- Структура на сервере: репозиторий лежит в `~/eda-v-tochku.ru`, а веб-корень сайта — `~/eda-v-tochku.ru/public_html`. После обновления репозитория деплой копирует `index.html`, `landing.css`, `favicon.png`, `robots.txt` и папку `images/` в `public_html` (папку можно переопределить секретом `PUBLISH_DIR`).
