@@ -1,0 +1,93 @@
+name: Audit refreshed illustrations and mobile layout
+on:
+  pull_request:
+    paths:
+      - 'images/**'
+      - 'index.html'
+      - 'landing.css'
+      - '.github/workflows/image-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image and browser tools
+        run: |
+          python -m pip install --disable-pip-version-check pillow playwright
+          python -m playwright install --with-deps chromium
+      - name: Audit image assets and responsive layout
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          from playwright.sync_api import sync_playwright
+          import subprocess
+          import time
+          import re
+
+          expected = {
+              "hero": (1200, 1500),
+              "problem-lunch": (1200, 900),
+              "problem-organizer": (1200, 900),
+              "problem-tastes": (1200, 900),
+              "before-after": (1600, 900),
+              "inside-shelves": (1200, 900),
+              "terms-dialog": (1200, 800),
+              "lead-relax": (1200, 800),
+          }
+          html = Path("index.html").read_text(encoding="utf-8")
+          for name, dimensions in expected.items():
+              asset = Path("images") / (name + ".webp")
+              source = Path("images/source-v2") / (name + ".svg")
+              assert asset.exists() and asset.stat().st_size <= 250000, str(asset)
+              with Image.open(asset) as picture:
+                  assert picture.format == "WEBP", str(asset)
+                  assert picture.size == dimensions, f"{asset}: {picture.size} != {dimensions}"
+              assert source.exists(), str(source)
+              assert not re.search(r"<text\b|REFRESH|ReFresh|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+", source.read_text(), re.I), str(source)
+              assert 'src="images/' + name + '.webp"' in html, str(asset)
+              print(asset, dimensions, asset.stat().st_size)
+
+          Path("artifacts").mkdir(exist_ok=True)
+          server = subprocess.Popen(["python", "-m", "http.server", "8765", "--bind", "127.0.0.1"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(1.0)
+              with sync_playwright() as p:
+                  browser = p.chromium.launch(headless=True)
+                  for width, height in ((360,800),(390,844),(768,1024),(1440,900)):
+                      page = browser.new_page(viewport={"width": width, "height": height}, device_scale_factor=1)
+                      page.goto("http://127.0.0.1:8765/", wait_until="domcontentloaded")
+                      for img in page.locator("img").all():
+                          img.scroll_into_view_if_needed(timeout=10000)
+                          img.evaluate("(el) => el.decode()", timeout=10000)
+                      assert page.locator('h1').is_visible()
+                      assert page.locator('img[src="images/hero.webp"]').evaluate("(el) => el.naturalWidth") == 1200
+                      status = page.evaluate("""() => ({
+                        viewport: document.documentElement.clientWidth,
+                        scrollWidth: document.documentElement.scrollWidth,
+                        missingAlt: Array.from(document.images).filter(i=>!i.alt || i.naturalWidth===0).map(i=>i.src)
+                      })""")
+                      assert not status["missingAlt"], status
+                      assert status["scrollWidth"] <= status["viewport"]+2, f"{width}: horizontal overflow {status}"
+                      page.screenshot(path=f"artifacts/landing-{width}.png", full_page=True)
+                      print("Responsive OK:", width, status)
+                      page.close()
+                  browser.close()
+          finally:
+              server.terminate()
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: illustrations-responsive-previews
+          path: artifacts/
+          if-no-files-found: ignore
