@@ -65,42 +65,40 @@ h3 { margin:0 0 6px; font-size:18px; }
 @media (max-width: 480px) { .lp-grid-4 { grid-template-columns:1fr; } }
 .lp-where { margin:32px 0 0; font-size:1.1rem; }
 .lp-grid-3 { grid-template-columns:repeat(3,1fr); }
-.lp-img { display:block; max-width:100%; height:auto; border-radius:12px; }
-.lp-hero-img { margin:0 auto; max-height:420px; width:auto; }
-.lp-card-img { margin-bottom:10px; }
-.lp-card-pic { padding:8px; }
-.lp-card-pic .lp-img { width:100%; }
-.lp-pic-wide { margin-top:20px; text-align:center; }
-.lp-lead-grid .lp-img { margin-top:16px; }
 @media (max-width: 800px) { .lp-grid-3 { grid-template-columns:1fr; } }
-.lp-card-pic .lp-img { aspect-ratio:4/3; object-fit:cover; }
-.lp-card-img { width:100%; aspect-ratio:4/3; object-fit:cover; object-position:top; }
-.lp-pic-wide .lp-img { margin:0 auto; width:auto; max-width:100%; height:auto; }
 .lp-hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
 .lp-form .lp-check { display:flex; gap:8px; align-items:flex-start; font-size:13px; color:#cbd5e1; }
 .lp-form .lp-check input { margin-top:3px; width:auto; }
 .lp-form button:disabled { opacity:.6; cursor:wait; }
 
+/* Картинки: единая сетка, рамка и пропорции */
+.lp-img { display:block; width:100%; height:auto; object-fit:cover; border-radius:16px; border:1px solid var(--lp-line); background:var(--lp-alt); }
+.lp-r43 { aspect-ratio:4/3; } .lp-r32 { aspect-ratio:3/2; } .lp-r45 { aspect-ratio:4/5; }
+.lp-hero-grid { align-items:start; }
+.lp-hero-art { padding:0; border:0; background:none; display:block; }
+.lp-hero-img { width:auto; max-width:100%; height:460px; margin:0 auto; }
+.lp-card-pic { display:flex; flex-direction:column; gap:6px; padding:10px; overflow:hidden; }
+.lp-card-pic .lp-img { border-radius:10px; }
+.lp-illustration-copy { padding:7px 7px 12px; }
+.lp-illustration-copy h3 { font-size:16px; line-height:1.3; margin:0 0 5px; }
+.lp-illustration-copy p { font-size:14px; line-height:1.45; margin:0; color:var(--lp-muted); }
+.lp-ba { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+.lp-ba figure { margin:0; }
+.lp-ba figcaption { margin-top:10px; padding:11px 15px; border-radius:10px; background:#f8eee6; color:#5a6670; font-size:14px; }
+.lp-ba figure + figure figcaption { background:#e1f4e8; color:#166d45; }
+.lp-ba-crop { position:relative; aspect-ratio:4/3; overflow:hidden; border-radius:16px; border:1px solid var(--lp-line); background:var(--lp-alt); } /* пока одна общая картинка: убрать, когда появятся before.webp и after.webp */
+.lp-ba-crop .lp-img { position:absolute; top:0; left:0; width:200%; max-width:none; height:100%; border:0; border-radius:0; object-fit:cover; }
+.lp-ba-crop-right .lp-img { left:-100%; }
+.lp-split { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; margin-top:20px; }
+.lp-split-top { align-items:start; }
+.lp-split .lp-sub { margin-top:0; }
+.lp-grid-1 { grid-template-columns:1fr; margin-top:0; }
+.lp-lead-grid { align-items:start; }
+.lp-lead-grid .lp-img { margin-top:16px; }
+@media (max-width: 800px) {
+    .lp-hero-img { height:auto; width:100%; max-width:340px; }
+    .lp-split { grid-template-columns:1fr; gap:20px; }
+}
+@media (max-width: 600px) { .lp-ba { grid-template-columns:1fr; } }
+@media (max-width: 480px) { .lp-card-pic { padding:8px; } .lp-illustration-copy { padding:5px 5px 10px; } }
 
-/* Issue #1: illustrations use intrinsic 2x sizes, with captions in HTML. */
-.lp-hero-art {border:0; padding:0; border-radius:18px; overflow:hidden; background:#f3f8f5; box-shadow:0 18px 44px rgba(20,33,61,.10)}
-.lp-hero-img {width:100%; height:auto; max-height:530px; object-fit:contain; aspect-ratio:4/5; border-radius:18px}
-.lp-card-pic {display:flex; flex-direction:column; padding:10px; gap:6px; overflow:hidden}
-.lp-card-pic .lp-img {width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px}
-.lp-illustration-copy {padding:7px 7px 12px}
-.lp-illustration-copy h3 {font-size:16px; line-height:1.3; margin:0 0 5px}
-.lp-illustration-copy p {font-size:14px; line-height:1.45; margin:0; color:var(--lp-muted)}
-.lp-split-labels {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px auto 0;max-width:1000px}
-.lp-split-labels span {display:block;border-radius:10px;padding:11px 15px;background:#f8eee6;color:#5a6670;font-size:14px}
-.lp-split-labels span:last-child {background:#e1f4e8;color:#166d45}
-#inside .lp-pic-wide .lp-img {width:min(100%,850px);height:auto}
-@media(max-width:800px) {
- .lp-hero-art {max-width:450px;margin:0 auto}
- .lp-hero-img {max-height:none}
-}
-@media(max-width:480px) {
- .lp-card-pic {padding:8px}
- .lp-split-labels {gap:6px}
- .lp-split-labels span {padding:9px;font-size:12px}
- .lp-illustration-copy {padding:5px 5px 10px}
-}
