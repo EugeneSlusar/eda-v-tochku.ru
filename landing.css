@@ -76,3 +76,7 @@ h3 { margin:0 0 6px; font-size:18px; }
 .lp-card-pic .lp-img { aspect-ratio:4/3; object-fit:cover; }
 .lp-card-img { width:100%; aspect-ratio:4/3; object-fit:cover; object-position:top; }
 .lp-pic-wide .lp-img { margin:0 auto; width:auto; max-width:100%; height:auto; }
+.lp-hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.lp-form .lp-check { display:flex; gap:8px; align-items:flex-start; font-size:13px; color:#cbd5e1; }
+.lp-form .lp-check input { margin-top:3px; width:auto; }
+.lp-form button:disabled { opacity:.6; cursor:wait; }
