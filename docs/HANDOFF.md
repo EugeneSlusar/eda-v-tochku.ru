@@ -10,7 +10,11 @@
 ## 2. Ветки и работа с Git
 - `main` — боевая, пуш запускает деплой. Ветка по умолчанию на GitHub, судя по клону, `landing/standalone` (там старая версия): желательно переключить default на `main` в настройках репозитория (Settings → Branches) или говорить новой сессии «работай от `main`».
 - Новые правки идут в `landing/<задача>`. Владелец сливает сам или просит Claude («слей»).
-- Устаревшие ветки, можно удалить: `landing/commercial-offer-content`, `landing/publish-to-public-html`, `landing/infographic-images`, `landing/lead-form`, `landing/chat-id-diagnostics`, `landing/illustrations-v2-issue-1` (всё это уже в `main`), `landing/layout-v3` (заменена раскладкой из PR №4), `landing/graphics-issue-1` (закрытый PR №2), `landing/issue-1-v3-layout` (PR №4, слит). Ветка `landing/domain-eda-ru` не слита и не нужна: в ней одна строка `README` про папку публикации.
+- Ветки, полностью вошедшие в `main` (можно удалить): `landing/commercial-offer-content`, `landing/publish-to-public-html`, `landing/infographic-images`, `landing/lead-form`, `landing/chat-id-diagnostics`, `landing/illustrations-v2-issue-1`, `landing/issue-1-v3-layout`, `landing/handoff-docs`, `landing/standalone`.
+- Три ветки намеренно НЕ слиты и сохранены как архив (ничего не потеряно), в `main` их сливать не нужно:
+  - `landing/layout-v3` — моя прежняя раскладка блоков с картинками, заменена раскладкой из PR №4 (конфликты в `index.html` и `landing.css`).
+  - `landing/graphics-issue-1` — закрытый PR №2: 7 SVG-сцен холодильника, включая `use-*` для блока «Кому это нужно». Слияние вернуло бы SVG в `images/`, что запрещено проверкой `image-audit`, и сломало бы раскладку.
+  - `landing/domain-eda-ru` — одна правка `README`, в которой неверно описан `DEPLOY_PATH` (на деле `DEPLOY_PATH` — родитель `public_html`).
 - Слитые PR: №3 (иллюстрации v2, отклонены по качеству), №4 (раскладка v3, частично). №2 закрыт без слияния.
 
 ## 3. Деплой на сервер
