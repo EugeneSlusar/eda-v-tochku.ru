@@ -23,7 +23,7 @@ Modern vivid 2.5D CGI service illustration with saturated colors, strong contras
 5. `before.png` — **4:3, 1200×900**. Igor waiting in a cafe queue with several other full-body people, he visibly checks his watch, tired and impatient. No signage or text.
 6. `after.png` — **4:3, 1200×900**. The SAME Igor happily takes a fresh meal from the smart refrigerator in the office, coworkers working and eating in the background.
 7. `inside-shelves.png` — **4:3, 1200×900**. Large closeup of an OPEN fridge, exactly five clear distinct shelves: salad; hot prepared meals and soup; sandwiches and rolls; baked goods and desserts; cold beverages. Each food item recognizably different and appetizing, not duplicated icons.
-8. `terms-dialog.png` — **4:3, 1200×900**. Oleg demonstrates a free spot on the wall to Anna, natural two-handed measuring gesture of roughly one meter, electric outlet clearly visible and a taped floor outline.
+8. `terms-dialog.png` — **3:2, 1200×800**. Oleg demonstrates a free spot on the wall to Anna, natural two-handed measuring gesture of roughly one meter, electric outlet clearly visible and a taped floor outline.
 9. `lead-relax.png` — **3:2, 1200×800**. Anna reclines in an office chair with hands behind her head, smiling peacefully, a glass smart fridge and two coworkers eating nearby, everything in frame.
 
 ## Сборка и проверка
@@ -31,7 +31,7 @@ Modern vivid 2.5D CGI service illustration with saturated colors, strong contras
 1. Сохранить полученные **оригиналы генерации** в `design/originals/` под именами выше.
 2. Выполнить `python -m pip install pillow` и `python tools/convert_illustrations.py`. Скрипт проверит наличие всех 9 PNG и сохранит WebP не более 250 KB в `images/`.
 3. Проверить сюжеты, пять полок, людей, руки, отсутствие надписей; визуальную проверку нейросети скрипт не заменяет.
-4. В `index.html` заменить временные два кадра из `before-after.webp` на `before.webp` и `after.webp`, размеры 1200×900, после чего удалить `images/before-after.webp`.
+4. В `index.html` заменить временные два кадра из `before-after.webp` на `before.webp` и `after.webp`, размеры 1200×900, после чего удалить `images/before-after.webp` и в `.github/workflows/image-audit.yml` заменить `before-after` (1600×900) на `before` и `after` (1200×900) в списке `expected`.
 5. Запустить CI и браузерные проверки на 1440, 768, 390 px; приложить скриншоты в PR.
 6. Мержить только после выполнения всех критериев Issue #1 v3.
 

@@ -13,7 +13,7 @@ SPECS = {
     "before": (1200, 900),
     "after": (1200, 900),
     "inside-shelves": (1200, 900),
-    "terms-dialog": (1200, 900),
+    "terms-dialog": (1200, 800),
     "lead-relax": (1200, 800),
 }
 LIMIT = 250_000

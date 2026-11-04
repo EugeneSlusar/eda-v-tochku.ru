@@ -10,11 +10,11 @@
 ## 2. Ветки и работа с Git
 - `main` — боевая, пуш запускает деплой. Ветка по умолчанию на GitHub, судя по клону, `landing/standalone` (там старая версия): желательно переключить default на `main` в настройках репозитория (Settings → Branches) или говорить новой сессии «работай от `main`».
 - Новые правки идут в `landing/<задача>`. Владелец сливает сам или просит Claude («слей»).
-- Ветки, полностью вошедшие в `main` (можно удалить): `landing/commercial-offer-content`, `landing/publish-to-public-html`, `landing/infographic-images`, `landing/lead-form`, `landing/chat-id-diagnostics`, `landing/illustrations-v2-issue-1`, `landing/issue-1-v3-layout`, `landing/handoff-docs`, `landing/standalone`.
+- Ветки, полностью вошедшие в `main` (можно удалить): `landing/commercial-offer-content`, `landing/publish-to-public-html`, `landing/infographic-images`, `landing/lead-form`, `landing/chat-id-diagnostics`, `landing/illustrations-v2-issue-1`, `landing/issue-1-v3-layout`, `landing/handoff-docs`, `landing/standalone`, а также служебная `claude/test-request-illustrations-xhhiht` (совпадает с `main`).
 - Три ветки намеренно НЕ слиты и сохранены как архив (ничего не потеряно), в `main` их сливать не нужно:
   - `landing/layout-v3` — моя прежняя раскладка блоков с картинками, заменена раскладкой из PR №4 (конфликты в `index.html` и `landing.css`).
   - `landing/graphics-issue-1` — закрытый PR №2: 7 SVG-сцен холодильника, включая `use-*` для блока «Кому это нужно». Слияние вернуло бы SVG в `images/`, что запрещено проверкой `image-audit`, и сломало бы раскладку.
-  - `landing/domain-eda-ru` — одна правка `README`, в которой неверно описан `DEPLOY_PATH` (на деле `DEPLOY_PATH` — родитель `public_html`).
+  - `landing/domain-eda-ru` — два коммита (домен туда и обратно, итог — одна правка `README`), в которой неверно описан `DEPLOY_PATH` (на деле `DEPLOY_PATH` — родитель `public_html`).
 - Слитые PR: №3 (иллюстрации v2, отклонены по качеству), №4 (раскладка v3, частично). №2 закрыт без слияния.
 
 ## 3. Деплой на сервер
@@ -49,8 +49,8 @@
 
 ## 6. Иллюстрации (issue №1)
 - История: сначала были кадры, нарезанные из инфографики (с логотипом ReFreshTech и телефонами, мелкие), затем PR №3 нарисовал 8 SVG-картинок. Они отклонены: «бумажные куклы» без рук, одинаковые значки на полках, блёклая палитра, сюжеты не читаются. Затем PR №4 пересобрал раскладку (слит), но новые картинки не сгенерированы: генератор возвращал макеты лендинга, а не сцены.
-- Задание переписано в issue №1 (v3). Промпты и сцены для 9 картинок: `design/ISSUE_V3_WORK.md`. Обязательные файлы: `hero`, `problem-lunch`, `problem-organizer`, `problem-tastes`, `before`, `after`, `inside-shelves`, `terms-dialog`, `lead-relax`. Генерировать нейросетью по одной картинке, не рисовать SVG.
-- Как подставить новые картинки: PNG в `design/originals/` (не уезжают на сервер), `python tools/convert_illustrations.py` сохраняет WebP до 250 КБ в `images/`; затем в `index.html` заменить временный блок «Было и стало» (две половины `before-after.webp`, классы `.lp-compare-*`) на `before.webp` и `after.webp` 1200×900, удалить `images/before-after.webp` и временный CSS.
+- Задание переписано в issue №1 (v3). Промпты и сцены для 9 картинок: `design/ISSUE_V3_WORK.md`. Обязательные файлы (размеры в `tools/convert_illustrations.py`; `terms-dialog` и `lead-relax` — 1200×800, `hero` — 1200×1500, остальные 1200×900): `hero`, `problem-lunch`, `problem-organizer`, `problem-tastes`, `before`, `after`, `inside-shelves`, `terms-dialog`, `lead-relax`. Генерировать нейросетью по одной картинке, не рисовать SVG.
+- Как подставить новые картинки: PNG в `design/originals/` (не уезжают на сервер), `python tools/convert_illustrations.py` сохраняет WebP до 250 КБ в `images/`; затем в `index.html` заменить временный блок «Было и стало» (две половины `before-after.webp`, классы `.lp-compare-*`) на `before.webp` и `after.webp` 1200×900, удалить `images/before-after.webp` и временный CSS, обновить список `expected` в `.github/workflows/image-audit.yml` (там пока `before-after` 1600×900).
 - Стилевые требования: 2.5D-иллюстрация, контрастная палитра (зелёный `#16a34a`, тёмно-синий `#14213d`, тёплые акценты), герои Анна, Олег, Мария, Игорь, 5 разных полок в холодильнике, без текста, цифр, вывесок и логотипов.
 - Раскладка: фиксированные пропорции (4:3, 4:5, 3:2), единая рамка, `Было/Стало` двумя блоками, «Что внутри» и «Условия» в две колонки. Высота страницы 4891 px на десктопе и 6465 px на телефоне (проверка `image-audit` требует ≤ 6500).
 - Необязательно: картинки для шагов «Как это работает» и блока «Кому это нужно».
