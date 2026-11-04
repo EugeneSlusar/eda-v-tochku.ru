@@ -241,3 +241,20 @@ h1,h2,h3,p { overflow-wrap:break-word; }
  html { scroll-behavior:auto; }
  .lp-btn { transition:none; }
 }
+
+
+/* Additional image positions required by v4 photo set. */
+.lp-fridge-feature { display:grid; grid-template-columns:200px minmax(0,1fr); gap:17px; align-items:center; background:#fff8f2; border:1px solid #fae6d5; padding:11px 14px; border-radius:14px; margin-top:14px; }
+.lp-fridge-slot { aspect-ratio:4/3; background:linear-gradient(130deg,#263846,#475a67); border-color:#566c79; }
+.lp-fridge-slot span { font-size:56px; filter:drop-shadow(0 9px 6px #0005); }
+.lp-fridge-feature h3 { font-weight:850; font-size:18px; margin:0 0 6px; }
+.lp-fridge-feature p { font-size:13px; color:var(--lp-muted); margin:0 0 4px; }
+.lp-bottom-photo { flex:0 0 132px; width:132px; aspect-ratio:3/2; border-color:#f3cba8; }
+.lp-bottom-photo span { font-size:54px; }
+@media(max-width:650px) {
+ .lp-fridge-feature { grid-template-columns:115px minmax(0,1fr); gap:11px; padding:9px; margin-top:11px; }
+ .lp-fridge-slot span { font-size:38px; }
+ .lp-fridge-feature h3 { font-size:14px; margin-bottom:3px; }
+ .lp-fridge-feature p { font-size:11px; }
+ .lp-bottom-photo { display:none; }
+}
