@@ -33,7 +33,8 @@ def convert(source: Path, destination: Path, target_size: tuple[int, int]) -> No
         if original.format != "PNG":
             raise ValueError(f"Expected a genuine PNG file: {source}")
         image = ImageOps.exif_transpose(original).convert("RGB")
-    if image.width < target_size[0] or image.height < target_size[1]:
+    # ChatGPT отдаёт максимум 1024x1536 / 1536x1024: допускаем небольшой апскейл (до 20%).
+    if image.width < target_size[0] * 0.8 or image.height < target_size[1] * 0.8:
         raise ValueError(f"{source}: resolution {image.size} is too small for {target_size}")
     # Preserve central subjects: a small crop is acceptable only when the original
     # aspect ratio differs; the photo composition itself must have center safe space.
