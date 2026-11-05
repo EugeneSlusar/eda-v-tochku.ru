@@ -39,11 +39,13 @@
 | 16 | `lead-relax.webp` | 1200×800 | Сотрудница расслабленно с обедом у холодильника (фон блока заявки) |
 
 ## Куда класть готовые картинки
-Исходные PNG (оригиналы генерации, без сжатия) — в **`design/originals/`** на ветке `landing/style-orange`, имена как в колонке «Файл», но с расширением `.png` (`hero.png`, `fridge-open.png`, `food-hot.png` и т. д.). Загрузить можно двумя способами:
-- через GitHub: ветка `landing/style-orange` → папка `design/` → Add file → Upload files (создайте папку `originals`, указав путь `design/originals/` в имени файла);
+Исходные PNG (оригиналы генерации, без сжатия) — в **`design/originals/`** в ветке `main`, имена как в колонке «Файл», но с расширением `.png` (`hero.png`, `fridge-open.png`, `food-hot.png` и т. д.). Загрузить можно двумя способами:
+- через GitHub: ветка `main` → папка `design/` → Add file → Upload files (создайте папку `originals`, указав путь `design/originals/` в имени файла);
 - или приложить PNG в чат с Claude, он сам положит их в `design/originals/`.
 
-Папка `design/originals/` на сервер не деплоится. Готовые WebP до 250 КБ в `images/` делает `python tools/convert_illustrations.py` (не вручную). Размеры PNG не меньше указанных в таблице.
+Папка `design/originals/` на сервер не деплоится. Готовые WebP до 250 КБ в `images/` делает `python tools/convert_illustrations.py` (не вручную). Размеры PNG — как отдаёт ChatGPT (1536×1024 или 1024×1536): конвертер сам обрежет по центру до нужного формата, поэтому главный объект держать в центре.
+
+**Готовые промпты для ChatGPT по каждой картинке — в `design/CHATGPT_PROMPTS.md`** (общая «база промпта» выше — только краткая выжимка).
 
 Иконки (преимущества, шаги) — простые контурные SVG-иконки внутри `index.html`, а не картинки в `images/` (проверка `image-audit` запрещает SVG-файлы в `images/`).
 
