@@ -6,7 +6,7 @@ from PIL import Image, ImageOps
 import argparse
 
 SPECS: dict[str, tuple[int, int]] = {
-    "hero": (1200, 1500),
+    "hero": (1536, 1024),
     "fridge-open": (1200, 900),
     "food-hot": (800, 600),
     "food-salads": (800, 600),
