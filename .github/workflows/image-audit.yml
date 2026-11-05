@@ -1,0 +1,124 @@
+name: Orange v4 — browser and photo audit
+on:
+  pull_request:
+    paths:
+      - 'images/**'
+      - 'design/originals/**'
+      - 'index.html'
+      - 'landing.css'
+      - 'tools/convert_illustrations.py'
+      - '.github/workflows/image-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  responsive:
+    name: Responsive layout (no horizontal scroll)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Test 390 / 768 / 1440 and capture screens
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          import subprocess
+          import time
+          html = Path("index.html").read_text(encoding="utf-8")
+          css = Path("landing.css").read_text(encoding="utf-8")
+          required = ("id=\"top\"", "id=\"inside\"", "id=\"benefits\"",
+                      "id=\"how\"", "id=\"placement\"", "id=\"faq\"",
+                      "id=\"lead\"", 'action="submit.php"', 'name="website"', 'name="consent"')
+          for element in required:
+              assert element in html, f"v4 missing {element}"
+          assert "--lp-orange:" in css
+          assert 'name="robots" content="noindex"' in html
+          assert not list(Path("images").rglob("*.svg"))
+          Path("artifacts").mkdir(exist_ok=True)
+          server = subprocess.Popen(["python", "-m", "http.server", "8765", "--bind", "127.0.0.1"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(1)
+              with sync_playwright() as p:
+                  browser = p.chromium.launch(headless=True)
+                  for width, height in ((390,844),(768,1024),(1440,900)):
+                      page = browser.new_page(viewport={"width": width, "height": height}, device_scale_factor=1)
+                      page.goto("http://127.0.0.1:8765/", wait_until="domcontentloaded")
+                      assert page.locator("h1").count() == 1
+                      assert page.locator("form#lead-form").count() == 1
+                      assert page.locator("form#lead-form input[name='company']").count() == 1
+                      for photo in page.locator("img").all():
+                          photo.scroll_into_view_if_needed(timeout=10000)
+                          photo.evaluate("(node) => node.decode()", timeout=10000)
+                      metrics = page.evaluate("""() => ({
+                        width: document.documentElement.clientWidth,
+                        scroll: document.documentElement.scrollWidth,
+                        height: document.documentElement.scrollHeight,
+                        broken: Array.from(document.images).filter(i=>!i.complete || i.naturalWidth===0 || !i.alt).map(i=>i.src),
+                        form: document.getElementById('lead-form').getAttribute('action')
+                      })""")
+                      assert metrics["scroll"] <= width+2, f"Horizontal overflow at {width}: {metrics}"
+                      assert metrics["broken"] == [], f"Broken / unlabeled images: {metrics['broken']}"
+                      assert metrics["form"] == "submit.php"
+                      if width == 390:
+                          assert metrics["height"] <= 6500, f"Page too tall at 390px: {metrics['height']}px"
+                      page.screenshot(path=f"artifacts/v4-{width}.png", full_page=True)
+                      print("LAYOUT PASS", width, metrics, flush=True)
+                      page.close()
+                  browser.close()
+          finally:
+              server.terminate()
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orange-v4-responsive
+          path: artifacts/
+          if-no-files-found: ignore
+
+  photos:
+    name: 16 AI originals and optimized WebP (required before merge)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check exact AI source and site photo set
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check pillow
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import ast
+          import re
+          source = Path("tools/convert_illustrations.py").read_text(encoding="utf-8")
+          module = ast.parse(source)
+          specs = next(ast.literal_eval(n.value) for n in module.body if isinstance(n, ast.AnnAssign) and getattr(n.target, "id", "") == "SPECS")
+          assert len(specs) == 16, len(specs)
+          html = Path("index.html").read_text(encoding="utf-8")
+          # The old assets and the initial illustrated placeholders are not acceptance-ready.
+          assert not re.search(r'class="lp-photo-slot|class="lp-photo-flag', html), "Replace temporary photo placeholders before merge"
+          assert not (Path("images")/"before-after.webp").exists()
+          for name, dims in specs.items():
+              png = Path("design/originals") / (name+".png")
+              webp = Path("images") / (name+".webp")
+              assert png.is_file(), f"Missing generated PNG: {png}"
+              assert webp.is_file(), f"Missing WebP: {webp}"
+              assert webp.stat().st_size <= 250000, f"File too large: {webp}"
+              with Image.open(png) as i:
+                  assert i.format == "PNG"
+              with Image.open(webp) as i:
+                  assert i.format == "WEBP" and i.size == dims, (name, i.size, dims)
+              assert f'images/{name}.webp' in html, f"Photo not connected: {name}"
+              print("PHOTO PASS", name, dims, webp.stat().st_size)
+          PY

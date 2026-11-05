@@ -60,9 +60,10 @@ jobs:
             -o IdentitiesOnly=yes \
             -o StrictHostKeyChecking=yes \
             "${DEPLOY_USER}@${DEPLOY_HOST}" \
-            "cd '${DEPLOY_PATH}' && bash .deploy/sync_repo_from_git.sh --auto"
+            "cd '${DEPLOY_PATH}' && bash .deploy/sync_repo_from_git.sh --auto && install -d '${PUBLISH_DIR}' && cp -f index.html landing.css favicon.png robots.txt submit.php '${PUBLISH_DIR}/' && cp -rf images '${PUBLISH_DIR}/'"
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          PUBLISH_DIR: ${{ secrets.PUBLISH_DIR || 'public_html' }}
