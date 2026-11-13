@@ -268,3 +268,32 @@ h1,h2,h3,p { overflow-wrap:break-word; }
   .lp-hero-photo { position:absolute; z-index:0; top:0; bottom:0; right:0; left:44%; height:auto; align-self:auto; background:none; }
   .lp-hero-photo img { object-position:center 14%; -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%); mask-image:linear-gradient(90deg,transparent 0,#000 30%); }
 }
+
+/* Слайдер шапки: размытый нейтральный фон на всю ширину, стрелки и точки */
+.lp-slides { display:grid; }
+.lp-slider { position:relative; }
+.lp-slide { grid-area:1/1; position:relative; isolation:isolate; overflow:hidden; opacity:0; visibility:hidden; transition:opacity .45s ease, visibility .45s; }
+.lp-slide.is-active { opacity:1; visibility:visible; }
+.lp-slide-bg { position:absolute; inset:-40px; z-index:0; background-size:cover; background-position:center 25%; filter:blur(26px) saturate(.85) brightness(1.1); transform:scale(1.05); }
+.lp-slide::before { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(90deg,rgba(255,255,255,.86) 0,rgba(255,255,255,.72) 38%,rgba(255,255,255,.1) 70%); }
+.lp-slide .lp-hero-grid, .lp-slide .lp-hero-photo { position:relative; }
+.lp-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:3; width:40px; height:40px; display:grid; place-items:center; border:0; border-radius:4px; background:#fff; color:var(--lp-ink-deep); box-shadow:0 2px 10px rgba(31,41,55,.18); cursor:pointer; }
+.lp-arrow svg { width:20px; height:20px; }
+.lp-arrow:hover { color:var(--lp-orange-dark); }
+.lp-arrow-prev { left:20px; } .lp-arrow-next { right:20px; }
+.lp-dots { position:absolute; left:0; right:0; bottom:14px; z-index:3; display:flex; justify-content:center; gap:10px; }
+.lp-dots button { width:10px; height:10px; padding:0; border:0; border-radius:50%; background:#fff; box-shadow:0 0 0 1px rgba(31,41,55,.25); cursor:pointer; }
+.lp-dots button[aria-selected="true"] { background:var(--lp-orange); box-shadow:none; }
+@media(min-width:901px) {
+  .lp-slide .lp-hero-photo { position:absolute; }
+  .lp-slide .lp-hero-grid { position:static; }
+}
+@media(max-width:900px) {
+  .lp-arrow { top:auto; bottom:8px; transform:none; width:34px; height:34px; }
+  .lp-arrow-prev { left:12px; } .lp-arrow-next { right:12px; }
+  .lp-dots { bottom:20px; }
+}
+
+.lp-slide .lp-hero-photo { z-index:2; }
+.lp-slide .lp-hero-grid { z-index:3; }
+@media(max-width:900px) { .lp-slide::before { background:rgba(255,255,255,.82); } .lp-slide .lp-hero-photo { margin-top:0; } }
