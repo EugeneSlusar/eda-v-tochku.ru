@@ -20,7 +20,10 @@
     </div>
   </header>
   <main id="content">
-    <section class="lp-hero">
+    <section class="lp-hero lp-slider" aria-roledescription="carousel" aria-label="Главный баннер">
+      <div class="lp-slides">
+      <div class="lp-slide is-active" role="group" aria-roledescription="slide" aria-label="Слайд 1">
+      <div class="lp-slide-bg" style="background-image:url(images/hero.webp)" aria-hidden="true"></div>
       <div class="lp-wrap lp-hero-grid">
         <div class="lp-hero-copy">
           <p class="lp-eyebrow">Умный холодильник с готовой едой</p>
@@ -29,8 +32,13 @@
           <div class="lp-actions"><a class="lp-btn" href="#lead"><svg aria-hidden="true" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4V2h6v2M9 10h6m-6 4h6"/></svg> Оставить заявку</a><a class="lp-btn lp-btn-ghost" href="#how">Как это работает <svg aria-hidden="true" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16m-7-7 7 7-7 7"/></svg></a></div>
           <ul class="lp-ticks"><li>Установка за наш счёт</li><li>Регулярное пополнение</li><li>Доступ к еде 24/7</li></ul>
         </div>
-        <div class="lp-hero-photo lp-photo-frame"><img src="images/hero.webp" width="1200" height="1500" alt="Иллюстрация умного холодильника с готовыми блюдами в офисе; временное изображение до фотосъёмки" fetchpriority="high" decoding="async"><span class="lp-photo-flag">Фотография обновляется</span></div>
+        <div class="lp-hero-photo lp-photo-frame"><img src="images/hero.webp" width="1200" height="1500" alt="Коллеги обедают за общим столом в светлом офисе, рядом умный холодильник с готовой едой" fetchpriority="high" decoding="async"></div>
       </div>
+      </div>
+      </div>
+      <button class="lp-arrow lp-arrow-prev" type="button" aria-label="Предыдущий слайд"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+      <button class="lp-arrow lp-arrow-next" type="button" aria-label="Следующий слайд"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+      <div class="lp-dots" role="tablist" aria-label="Выбор слайда"></div>
     </section>
     <section class="lp-perks-section" id="benefits" aria-label="Преимущества"><div class="lp-wrap lp-perks"><div class="lp-perk"><span class="lp-perk-icon"><svg aria-hidden="true" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4C9 3 4 9 4 16a4 4 0 0 0 4 4c7 0 13-7 12-16ZM6 18l11-10"/></svg></span><span>Натуральные ингредиенты</span></div>
 <div class="lp-perk"><span class="lp-perk-icon"><svg aria-hidden="true" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M17 3v18M14 9c0-4 2-6 4-6s3 2 3 6-2 5-4 5h-3Z"/></svg></span><span>Разнообразное меню</span></div>
@@ -94,6 +102,36 @@
     <section class="lp-bottom-cta"><div class="lp-wrap lp-bottom-inner"><div class="lp-photo-slot lp-bottom-photo" data-image="lead-relax" role="img" aria-label="Сотрудница с готовым обедом отдыхает рядом с холодильником"><span aria-hidden="true">😊</span></div><div><h2>Установим холодильник в вашей компании</h2><p>Напишите нам через форму — обсудим место, сотрудников и ассортимент.</p></div><a class="lp-btn" href="#lead">Оставить заявку <svg aria-hidden="true" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16m-7-7 7 7-7 7"/></svg></a></div></section>
   </main>
   <footer class="lp-footer"><div class="lp-wrap lp-footer-row"><a class="lp-logo lp-logo-footer" href="#top"><span class="lp-logo-mark"><svg aria-hidden="true" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M17 3v18M14 9c0-4 2-6 4-6s3 2 3 6-2 5-4 5h-3Z"/></svg></span><span>Еда в точку<small>Тольятти · готовая еда в офисе</small></span></a><div class="lp-footer-req"><b>ИП Слюсарь Евгений Александрович</b><br>ИНН 632132531832 · ОГРНИП 320631300075201<br>445027, Самарская обл., г. Тольятти, ул. Юбилейная, д. 57, кв. 42<br>Р/с 40802810700001590919 в АО «ТБанк», БИК 044525974, к/с 30101810145250000974<br>ИНН банка 7710140679, 127287, г. Москва, ул. Хуторская 2-я, д. 38А, стр. 26<br><a href="privacy.html">Политика конфиденциальности</a></div><a href="#top" class="lp-footer-top">Наверх ↑</a></div></footer>
+  <script>
+(function () {
+  var slider = document.querySelector('.lp-slider');
+  if (!slider) return;
+  var slides = slider.querySelectorAll('.lp-slide');
+  var dots = slider.querySelector('.lp-dots');
+  var current = 0;
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach(function (el, n) {
+      el.classList.toggle('is-active', n === current);
+      el.setAttribute('aria-hidden', n === current ? 'false' : 'true');
+    });
+    dots.querySelectorAll('button').forEach(function (b, n) {
+      b.setAttribute('aria-selected', n === current ? 'true' : 'false');
+    });
+  }
+  slides.forEach(function (el, n) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-label', 'Слайд ' + (n + 1));
+    b.addEventListener('click', function () { show(n); });
+    dots.appendChild(b);
+  });
+  slider.querySelector('.lp-arrow-prev').addEventListener('click', function () { show(current - 1); });
+  slider.querySelector('.lp-arrow-next').addEventListener('click', function () { show(current + 1); });
+  show(0);
+})();
+</script>
   <script>
   (function () {
     var form = document.getElementById('lead-form');
