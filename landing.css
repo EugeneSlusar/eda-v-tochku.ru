@@ -258,3 +258,17 @@ h1,h2,h3,p { overflow-wrap:break-word; }
  .lp-fridge-feature p { font-size:11px; }
  .lp-bottom-photo { display:none; }
 }
+
+/* Реквизиты в подвале и страница политики */
+.lp-footer-req { max-width:560px; font-size:12px; line-height:1.55; color:#b1b8c1; }
+.lp-footer-req b { color:#fff; }
+.lp-footer-req a, .lp-form .lp-check a { color:inherit; text-decoration:underline; }
+.lp-legal { background:#fff; color:var(--lp-ink); }
+.lp-legal-page { max-width:820px; padding:32px 16px 64px; line-height:1.6; }
+.lp-legal-page h1 { font-size:30px; margin:12px 0 4px; }
+.lp-legal-page h2 { font-size:19px; margin:28px 0 8px; }
+.lp-legal-date { color:var(--lp-muted); margin:0 0 8px; }
+.lp-legal-back { color:var(--lp-orange-dark); text-decoration:none; }
+.lp-legal-page ul { padding-left:22px; }
+.lp-req { display:grid; grid-template-columns:max-content 1fr; gap:6px 18px; }
+.lp-req dt { color:var(--lp-muted); } .lp-req dd { margin:0; }
