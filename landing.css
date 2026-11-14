@@ -54,8 +54,6 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 .lp-ticks { display:flex; flex-wrap:wrap; gap:7px 17px; list-style:none; padding:0; margin:0; color:#3f4852; font-size:12px; font-weight:650; }
 .lp-ticks li { display:flex; align-items:center; gap:6px; }
 .lp-ticks li::before { content:"✓"; color:#fff; background:var(--lp-green); font-size:10px; display:grid; place-items:center; border-radius:50%; height:17px; width:17px; flex:0 0 17px; }
-.lp-hero-photo { position:relative; height:500px; align-self:center; isolation:isolate; min-width:0; display:flex; justify-content:center; align-items:stretch; overflow:hidden; border-radius:0; background:radial-gradient(circle at 60% 60%, #ffd6b6, #fff1e6 60%); }
-.lp-hero-photo img { height:100%; width:100%; min-height:0; object-fit:cover; object-position:center 8%; }
 .lp-photo-flag { position:absolute; bottom:9px; right:9px; background:#fffde9; color:#986108; border:1px solid #f6d58d; border-radius:6px; padding:4px 7px; font-size:10px; }
 .lp-perks-section { padding:14px 0 6px; }
 .lp-perks { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
@@ -179,8 +177,6 @@ h1,h2,h3,p { overflow-wrap:break-word; }
  .lp-actions { margin-bottom:12px; }
  .lp-actions .lp-btn { min-height:42px; font-size:13px; padding:10px 12px; }
  .lp-ticks { gap:6px 11px; font-size:11px; }
- .lp-hero-photo { height:300px; margin-inline:-16px; border-radius:0; }
- .lp-hero-photo img { max-height:none; width:100%; min-height:0; object-position:center 12%; }
  .lp-perks-section { padding:11px 0 5px; }
  .lp-perks { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
  .lp-perk { font-size:11px; min-height:45px; padding:5px 7px; border-radius:10px; }
@@ -274,14 +270,12 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 .lp-req { display:grid; grid-template-columns:max-content 1fr; gap:6px 18px; }
 .lp-req dt { color:var(--lp-muted); } .lp-req dd { margin:0; }
 
-/* Шапка на всю ширину экрана: фото справа до самого края, слева плавно уходит в светлый фон под заголовок */
+/* Шапка: один цельный широкий кадр на всю ширину, текст лежит прямо на размытой левой части фотографии */
 @media(min-width:901px) {
   .lp-hero { position:relative; overflow:hidden; }
   .lp-hero-grid { position:static; min-height:520px; grid-template-columns:minmax(0,1fr); }
   .lp-hero-copy { position:relative; z-index:2; max-width:520px; }
   .lp h1 { max-width:500px; }
-  .lp-hero-photo { position:absolute; z-index:0; top:0; bottom:0; right:0; left:44%; height:auto; align-self:auto; background:none; }
-  .lp-hero-photo img { object-position:center 14%; -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%); mask-image:linear-gradient(90deg,transparent 0,#000 30%); }
 }
 
 /* Слайдер шапки: размытый нейтральный фон на всю ширину, стрелки и точки */
@@ -289,9 +283,6 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 .lp-slider { position:relative; }
 .lp-slide { grid-area:1/1; position:relative; isolation:isolate; overflow:hidden; opacity:0; visibility:hidden; transition:opacity .45s ease, visibility .45s; }
 .lp-slide.is-active { opacity:1; visibility:visible; }
-.lp-slide-bg { position:absolute; inset:-40px; z-index:0; background-size:cover; background-position:center 25%; filter:blur(26px) saturate(.85) brightness(1.1); transform:scale(1.05); }
-.lp-slide::before { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(90deg,rgba(255,255,255,.86) 0,rgba(255,255,255,.72) 38%,rgba(255,255,255,.1) 70%); }
-.lp-slide .lp-hero-grid, .lp-slide .lp-hero-photo { position:relative; }
 .lp-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:3; width:40px; height:40px; display:grid; place-items:center; border:0; border-radius:4px; background:#fff; color:var(--lp-ink-deep); box-shadow:0 2px 10px rgba(31,41,55,.18); cursor:pointer; }
 .lp-arrow svg { width:20px; height:20px; }
 .lp-arrow:hover { color:var(--lp-orange-dark); }
@@ -300,8 +291,6 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 .lp-dots button { width:10px; height:10px; padding:0; border:0; border-radius:50%; background:#fff; box-shadow:0 0 0 1px rgba(31,41,55,.25); cursor:pointer; }
 .lp-dots button[aria-selected="true"] { background:var(--lp-orange); box-shadow:none; }
 @media(min-width:901px) {
-  .lp-slide .lp-hero-photo { position:absolute; }
-  .lp-slide .lp-hero-grid { position:static; }
 }
 @media(max-width:900px) {
   .lp-arrow { top:auto; bottom:8px; transform:none; width:34px; height:34px; }
@@ -309,6 +298,15 @@ h1,h2,h3,p { overflow-wrap:break-word; }
   .lp-dots { bottom:20px; }
 }
 
-.lp-slide .lp-hero-photo { z-index:2; }
 .lp-slide .lp-hero-grid { z-index:3; }
-@media(max-width:900px) { .lp-slide::before { background:rgba(255,255,255,.82); } .lp-slide .lp-hero-photo { margin-top:0; } }
+
+.lp-slide-img { position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center 45%; }
+@media(max-width:900px) {
+  .lp-slide { display:flex; flex-direction:column; }
+  .lp-slide-img { position:relative; inset:auto; order:2; height:320px; object-position:82% 45%; }
+}
+@media(min-width:901px) {
+  .lp-hero-copy { text-shadow:0 0 18px rgba(255,255,255,.95), 0 0 6px rgba(255,255,255,.8); }
+  .lp-hero-copy .lp-btn, .lp-hero-copy .lp-highlight { text-shadow:none; }
+  .lp-hero-copy .lp-eyebrow { color:#c2410c; }
+}
