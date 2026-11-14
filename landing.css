@@ -339,3 +339,8 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 @media(max-width:650px) { .lp-logo img { height:36px; } .lp-logo-footer img { height:34px; } }
 .lp-logo img { height:54px; }
 @media(max-width:650px) { .lp-logo img { height:42px; } }
+@media(min-width:901px) {
+  .lp-hero-grid { min-height:clamp(520px,34vw,660px); }
+  .lp-slide-img { object-position:center 48%; }
+}
+@media(max-width:900px) { .lp-slide-img { object-position:100% 45%; } }
