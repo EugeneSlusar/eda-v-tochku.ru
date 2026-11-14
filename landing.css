@@ -356,3 +356,6 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 }
 
 .lp-food-photo img { display:block; width:100%; height:100%; object-fit:cover; }
+
+.lp-place-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 0%; }
+.lp-place-photo { aspect-ratio:3/2; }
