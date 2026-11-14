@@ -114,10 +114,8 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 .lp-compare-section { padding-top:8px; }
 .lp-compare-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
 .lp-compare-card { margin:0; border:1px solid var(--lp-line); border-radius:13px; overflow:hidden; }
-.lp-compare-photo { display:grid; place-items:center; aspect-ratio:16/7; background:linear-gradient(145deg,#f0f0f0,#d3d6d9); color:#555; }
-.lp-compare-photo span { font-size:60px; filter:grayscale(1); }
-.lp-compare-after { background:linear-gradient(145deg,#eaf3eb,#ffe7d3); }
-.lp-compare-after span { filter:none; }
+.lp-compare-photo { aspect-ratio:4/3; background:#e9e4e0; }
+.lp-compare-photo img { display:block; width:100%; height:100%; object-fit:cover; }
 .lp-compare-card figcaption { background:#f7f7f7; padding:11px 13px; font-size:13px; font-weight:600; }
 .lp-compare-card:last-child figcaption { background:#f0f8ed; }
 .lp-compare-card figcaption strong { color:var(--lp-orange-dark); }
@@ -245,14 +243,11 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 .lp-fridge-slot span { font-size:56px; filter:drop-shadow(0 9px 6px #0005); }
 .lp-fridge-feature h3 { font-weight:850; font-size:18px; margin:0 0 6px; }
 .lp-fridge-feature p { font-size:13px; color:var(--lp-muted); margin:0 0 4px; }
-.lp-bottom-photo { flex:0 0 132px; width:132px; aspect-ratio:3/2; border-color:#f3cba8; }
-.lp-bottom-photo span { font-size:54px; }
 @media(max-width:650px) {
  .lp-fridge-feature { grid-template-columns:115px minmax(0,1fr); gap:11px; padding:9px; margin-top:11px; }
  .lp-fridge-slot span { font-size:38px; }
  .lp-fridge-feature h3 { font-size:14px; margin-bottom:3px; }
  .lp-fridge-feature p { font-size:11px; }
- .lp-bottom-photo { display:none; }
 }
 
 /* Реквизиты в подвале и страница политики */
@@ -364,3 +359,19 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 .lp-fridge-slot { aspect-ratio:3/2; }
 .lp-fridge-slot img { object-position:center 0%; }
 @media(min-width:901px) { .lp-fridge-feature { grid-template-columns:minmax(0,400px) minmax(0,1fr); gap:32px; padding:14px 18px; } }
+
+/* Нижний блок с заявкой: фото справа, плавный переход в цвет стены слева */
+.lp-bottom-cta { background:#e9e3e2; padding:0; overflow:hidden; }
+.lp-bottom-inner { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,58%); grid-template-rows:1fr auto 1fr; column-gap:0; align-items:stretch; }
+.lp-bottom-photo { grid-column:2; grid-row:1 / -1; display:block; width:100%; height:100%; max-height:420px; object-fit:cover; object-position:right bottom; -webkit-mask-image:linear-gradient(to right,transparent,#000 28%,#000 93%,transparent); mask-image:linear-gradient(to right,transparent,#000 28%,#000 93%,transparent); }
+.lp-bottom-inner > div { grid-column:1; grid-row:2; padding:20px 0 14px; }
+.lp-bottom-inner > .lp-btn { grid-column:1; grid-row:3; align-self:start; justify-self:start; }
+.lp-bottom-cta h2 { font-size:clamp(22px,2.4vw,30px); margin:0 0 8px; }
+.lp-bottom-cta p { font-size:15px; }
+@media(max-width:650px) {
+ .lp-bottom-inner { grid-template-columns:minmax(0,1fr); grid-template-rows:auto; }
+ .lp-bottom-inner > div,.lp-bottom-inner > .lp-btn,.lp-bottom-photo { grid-column:1; grid-row:auto; }
+ .lp-bottom-inner > div { padding:22px 0 12px; }
+ .lp-bottom-inner > .lp-btn { margin-bottom:0; }
+ .lp-bottom-photo { order:3; margin-top:14px; max-height:none; height:auto; aspect-ratio:3/2; -webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%); mask-image:linear-gradient(to bottom,transparent,#000 22%); }
+}
