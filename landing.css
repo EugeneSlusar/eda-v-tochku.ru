@@ -359,3 +359,8 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 
 .lp-place-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 0%; }
 .lp-place-photo { aspect-ratio:3/2; }
+
+/* Блок «Что внутри холодильника»: компактнее, фото 3:2 как в карточке «Офис» */
+.lp-fridge-slot { aspect-ratio:3/2; }
+.lp-fridge-slot img { object-position:center 0%; }
+@media(min-width:901px) { .lp-fridge-feature { grid-template-columns:minmax(0,400px) minmax(0,1fr); gap:32px; padding:14px 18px; } }
