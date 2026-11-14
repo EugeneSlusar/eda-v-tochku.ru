@@ -30,8 +30,8 @@ def convert(source: Path, destination: Path, target_size: tuple[int, int]) -> No
     if not source.is_file():
         raise FileNotFoundError(f"Generated PNG source missing: {source}")
     with Image.open(source) as original:
-        if original.format != "PNG":
-            raise ValueError(f"Expected a genuine PNG file: {source}")
+        if original.format not in ("PNG", "WEBP"):
+            raise ValueError(f"Expected a genuine PNG or WebP file: {source}")
         image = ImageOps.exif_transpose(original).convert("RGB")
     # ChatGPT отдаёт максимум 1024x1536 / 1536x1024: допускаем небольшой апскейл (до 20%).
     if image.width < target_size[0] * 0.8 or image.height < target_size[1] * 0.8:
@@ -55,14 +55,21 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=Path("images"))
     parser.add_argument("--check-only", action="store_true", help="Only check that all source images exist and are PNG")
     args = parser.parse_args()
-    missing = [args.originals / (name + ".png") for name in SPECS if not (args.originals / (name + ".png")).is_file()]
+    def find(name: str) -> Path:
+        for ext in (".png", ".webp"):
+            candidate = args.originals / (name + ext)
+            if candidate.is_file():
+                return candidate
+        return args.originals / (name + ".png")
+
+    missing = [find(name) for name in SPECS if not find(name).is_file()]
     if missing:
         parser.error("Missing AI-generated original images:\n" + "\n".join(map(str, missing)))
     for name, resolution in SPECS.items():
-        source = args.originals / (name + ".png")
+        source = find(name)
         with Image.open(source) as im:
-            if im.format != "PNG":
-                parser.error(f"Not a PNG: {source}")
+            if im.format not in ("PNG", "WEBP"):
+                parser.error(f"Not a PNG/WebP: {source}")
             print(f"Original verified: {source} {im.size}")
         if not args.check_only:
             convert(source, args.output / (name + ".webp"), resolution)
