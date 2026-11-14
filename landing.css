@@ -375,3 +375,25 @@ h1,h2,h3,p { overflow-wrap:break-word; }
  .lp-bottom-inner > .lp-btn { margin-bottom:0; }
  .lp-bottom-photo { order:3; margin-top:14px; max-height:none; height:auto; aspect-ratio:3/2; -webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%); mask-image:linear-gradient(to bottom,transparent,#000 22%); }
 }
+
+/* Один слайд: стрелки и точки не нужны */
+.lp-slider.is-single .lp-arrow,.lp-slider.is-single .lp-dots { display:none; }
+
+/* Кнопка под «Было и стало» */
+.lp-compare-cta { margin:18px 0 0; text-align:center; }
+
+/* Сообщения формы на оранжевой панели: белая плашка, читается лучше белого на оранжевом */
+.lp-form-note { font-size:13px; }
+.lp-form-note.is-error,.lp-form-note.is-ok { padding:7px 10px; border-radius:9px; background:#fff; font-weight:700; }
+.lp-form-note.is-error { color:#b42318; }
+.lp-form-note.is-ok { color:#166534; }
+.lp-form .lp-check { font-size:12px; }
+
+/* Закреплённая кнопка на телефоне: видна, пока на экране нет ни шапки, ни формы, ни нижнего блока */
+.lp-sticky-cta { display:none; }
+@media(max-width:650px) {
+  .lp-sticky-cta { display:block; position:fixed; left:12px; right:12px; bottom:12px; z-index:20; padding:14px 18px; border-radius:12px; background:linear-gradient(180deg,#ff8a3d,#ea580c); color:#fff!important; font-weight:800; font-size:15px; text-align:center; text-decoration:none; box-shadow:0 8px 22px rgba(205,76,13,.38); transform:translateY(140%); transition:transform .25s ease; pointer-events:none; }
+  .lp-sticky-cta.is-shown { transform:none; pointer-events:auto; }
+  .lp-footer { padding-bottom:78px; }
+}
+@media(prefers-reduced-motion:reduce) { .lp-sticky-cta { transition:none; } }

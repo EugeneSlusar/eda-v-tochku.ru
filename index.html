@@ -7,6 +7,18 @@
   <meta name="robots" content="noindex">
   <meta name="description" content="Готовая еда прямо в офисе: установим умный холодильник в Тольятти, будем пополнять ассортимент и обслуживать его.">
   <title>Еда в точку — готовая еда в вашем офисе</title>
+  <link rel="canonical" href="https://eda-v-tochku.ru/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="Еда в точку">
+  <meta property="og:title" content="Еда в точку — готовая еда в вашем офисе">
+  <meta property="og:description" content="Умный холодильник с готовой едой: бесплатная установка, регулярное пополнение, обслуживание под ключ. Тольятти.">
+  <meta property="og:url" content="https://eda-v-tochku.ru/">
+  <meta property="og:image" content="https://eda-v-tochku.ru/images/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Еда в точку","url":"https://eda-v-tochku.ru/","logo":"https://eda-v-tochku.ru/favicon.png","description":"Умные холодильники с готовой едой для офисов: установка, пополнение и обслуживание.","areaServed":{"@type":"City","name":"Тольятти"}}</script>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="landing.css">
 </head>
@@ -23,7 +35,7 @@
     <section class="lp-hero lp-slider" aria-roledescription="carousel" aria-label="Главный баннер">
       <div class="lp-slides">
       <div class="lp-slide is-active" role="group" aria-roledescription="slide" aria-label="Слайд 1">
-      <img class="lp-slide-img" src="images/hero.webp" width="1920" height="816" alt="Коллеги обедают в светлом офисе рядом с умным холодильником с готовой едой" fetchpriority="high" decoding="async">
+      <img class="lp-slide-img" src="images/hero.webp" srcset="images/hero-960.webp 960w, images/hero.webp 1920w" sizes="100vw" width="1920" height="816" alt="Коллеги обедают в светлом офисе рядом с умным холодильником с готовой едой" fetchpriority="high" decoding="async">
       <div class="lp-wrap lp-hero-grid">
         <div class="lp-hero-copy">
           <p class="lp-eyebrow">Умный холодильник с готовой едой</p>
@@ -91,7 +103,7 @@
       <div class="lp-wrap"><h2>Было и стало</h2><div class="lp-compare-grid">
         <figure class="lp-compare-card"><div class="lp-compare-photo"><img src="images/before.webp" width="1200" height="900" loading="lazy" alt="Сотрудник смотрит на часы в очереди за обедом в кафе"></div><figcaption><strong>Было:</strong> поиски кафе, очереди, ожидание</figcaption></figure>
         <figure class="lp-compare-card"><div class="lp-compare-photo"><img src="images/after.webp" width="1200" height="900" loading="lazy" alt="Тот же сотрудник берёт обед из холодильника «Еда в точку» в офисе"></div><figcaption><strong>Стало:</strong> еда доступна прямо в офисе</figcaption></figure>
-      </div></div>
+      </div><p class="lp-compare-cta"><a class="lp-btn" href="#lead">Хочу так же в моём офисе</a></p></div>
     </section>
     <section class="lp-section lp-faq-section" id="faq"><div class="lp-wrap"><h2>Частые вопросы</h2><div class="lp-faq"><details class="lp-faq-item"><summary>Сколько стоит установка?<span class="lp-faq-mark" aria-hidden="true">+</span></summary><p>Устанавливаем холодильник за наш счёт. Детальные условия размещения обсуждаем индивидуально.</p></details>
 <details class="lp-faq-item"><summary>Как часто обновляется ассортимент?<span class="lp-faq-mark" aria-hidden="true">+</span></summary><p>Привозим свежую продукцию по графику, следим за сроками годности и анализируем покупки, чтобы корректировать ассортимент.</p></details>
@@ -101,12 +113,14 @@
     <section class="lp-bottom-cta"><div class="lp-wrap lp-bottom-inner"><img class="lp-bottom-photo" src="images/lead-relax.webp" width="1200" height="800" loading="lazy" alt="Сотрудница с готовым обедом стоит рядом с холодильником «Еда в точку»"><div><h2>Установим холодильник в вашей компании</h2><p>Напишите нам через форму — обсудим место, сотрудников и ассортимент.</p></div><a class="lp-btn" href="#lead">Оставить заявку <svg aria-hidden="true" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16m-7-7 7 7-7 7"/></svg></a></div></section>
   </main>
   <footer class="lp-footer"><div class="lp-wrap lp-footer-row"><a class="lp-logo lp-logo-footer" href="#top"><img src="images/logo-white.webp" width="480" height="141" alt="Еда в точку — готовая еда рядом"></a><div class="lp-footer-req"><a href="requisites.html">Реквизиты</a> · <a href="privacy.html">Политика конфиденциальности</a></div><a href="#top" class="lp-footer-top">Наверх ↑</a></div></footer>
+  <a class="lp-sticky-cta" id="sticky-cta" href="#lead">Оставить заявку</a>
   <script>
 (function () {
   var slider = document.querySelector('.lp-slider');
   if (!slider) return;
   var slides = slider.querySelectorAll('.lp-slide');
   var dots = slider.querySelector('.lp-dots');
+  if (slides.length < 2) slider.classList.add('is-single');
   var current = 0;
   function show(i) {
     current = (i + slides.length) % slides.length;
@@ -140,26 +154,42 @@
       event.preventDefault();
       var company = form.elements.company.value.trim();
       var phone = form.elements.phone.value.replace(/\D/g, '');
-      if (!company || phone.length < 10 || !form.elements.consent.checked) {
-        status.textContent = 'Заполните компанию, телефон и подтвердите согласие.';
-        return;
+      function say(text, kind) {
+        status.textContent = text;
+        status.className = 'lp-form-note' + (kind ? ' is-' + kind : '');
       }
+      if (!company) { say('Укажите название компании.', 'error'); form.elements.company.focus(); return; }
+      if (phone.length < 10) { say('Укажите телефон полностью, с кодом города.', 'error'); form.elements.phone.focus(); return; }
+      if (!form.elements.consent.checked) { say('Подтвердите согласие на обработку данных.', 'error'); form.elements.consent.focus(); return; }
       button.disabled = true;
-      status.textContent = 'Отправляем...';
+      say('Отправляем...', '');
       fetch(form.action, {method: 'POST', body: new FormData(form)})
-        .then(function (response) { return response.json().then(function (data) { return {ok:response.ok && data.ok, data:data}; }); })
+        .then(function (response) { return response.json().catch(function () { return {}; }).then(function (data) { return {ok:response.ok && data.ok, data:data}; }); })
         .then(function (result) {
           if (result.ok) {
             form.reset();
-            status.textContent = 'Спасибо! Заявка отправлена. Свяжемся с вами в рабочее время.';
+            say('Спасибо! Заявка отправлена. Свяжемся с вами в рабочее время.', 'ok');
           } else {
-            status.textContent = result.data && result.data.errors ? 'Проверьте поля формы.' : 'Не удалось отправить заявку. Попробуйте позже.';
+            say(result.data && result.data.errors ? 'Проверьте поля формы.' : 'Не удалось отправить заявку. Попробуйте позже.', 'error');
           }
         })
-        .catch(function () { status.textContent = 'Не удалось отправить заявку. Попробуйте позже.'; })
+        .catch(function () { say('Не удалось отправить заявку. Попробуйте позже.', 'error'); })
         .then(function () { button.disabled = false; });
     });
   })();
   </script>
+<script>
+(function () {
+  var bar = document.getElementById('sticky-cta');
+  if (!bar || !('IntersectionObserver' in window)) return;
+  var targets = document.querySelectorAll('.lp-hero, #lead, .lp-bottom-cta');
+  var visible = new Set();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { e.isIntersecting ? visible.add(e.target) : visible.delete(e.target); });
+    bar.classList.toggle('is-shown', visible.size === 0);
+  });
+  targets.forEach(function (t) { io.observe(t); });
+})();
+</script>
 </body>
 </html>

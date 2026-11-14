@@ -85,7 +85,7 @@ jobs:
           if-no-files-found: ignore
 
   photos:
-    name: 16 AI originals and optimized WebP (required before merge)
+    name: 15 AI originals and optimized WebP (required before merge)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -104,19 +104,20 @@ jobs:
           source = Path("tools/convert_illustrations.py").read_text(encoding="utf-8")
           module = ast.parse(source)
           specs = next(ast.literal_eval(n.value) for n in module.body if isinstance(n, ast.AnnAssign) and getattr(n.target, "id", "") == "SPECS")
-          assert len(specs) == 16, len(specs)
+          assert len(specs) == 15, len(specs)
           html = Path("index.html").read_text(encoding="utf-8")
           # The old assets and the initial illustrated placeholders are not acceptance-ready.
-          assert not re.search(r'class="lp-photo-slot|class="lp-photo-flag', html), "Replace temporary photo placeholders before merge"
-          assert not (Path("images")/"before-after.webp").exists()
+          assert not re.search(r'data-image=|lp-photo-flag', html), "Replace temporary photo placeholders before merge"
+          for old in ("before-after", "inside-shelves", "problem-lunch", "problem-organizer", "problem-tastes", "terms-dialog", "fridge-open"):
+              assert not (Path("images")/(old+".webp")).exists(), f"Remove unused image: {old}"
           for name, dims in specs.items():
-              png = Path("design/originals") / (name+".png")
+              png = next((p for p in (Path("design/originals") / (name+".png"), Path("design/originals") / (name+".webp")) if p.is_file()), None)
               webp = Path("images") / (name+".webp")
-              assert png.is_file(), f"Missing generated PNG: {png}"
+              assert png, f"Missing generated original (PNG or WebP): {name}"
               assert webp.is_file(), f"Missing WebP: {webp}"
               assert webp.stat().st_size <= 250000, f"File too large: {webp}"
               with Image.open(png) as i:
-                  assert i.format == "PNG"
+                  assert i.format in ("PNG", "WEBP")
               with Image.open(webp) as i:
                   assert i.format == "WEBP" and i.size == dims, (name, i.size, dims)
               assert f'images/{name}.webp' in html, f"Photo not connected: {name}"
