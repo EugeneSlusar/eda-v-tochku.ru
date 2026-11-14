@@ -321,3 +321,15 @@ h1,h2,h3,p { overflow-wrap:break-word; }
   .lp-hero-copy .lp-lead { font-weight:550; }
 }
 @media(max-width:650px) { .lp-lead br { display:none; } }
+
+.lp-fridge-slot img { display:block; width:100%; height:100%; object-fit:cover; }
+@media(min-width:901px) {
+  .lp-fridge-feature { grid-template-columns:minmax(0,520px) minmax(0,1fr); gap:32px; padding:16px 20px; }
+  .lp-fridge-feature h3 { font-size:24px; margin-bottom:10px; }
+  .lp-fridge-feature p { font-size:15px; margin-bottom:8px; }
+}
+@media(max-width:650px) {
+  .lp-fridge-feature { grid-template-columns:1fr; gap:10px; }
+  .lp-fridge-feature h3 { font-size:16px; }
+  .lp-fridge-feature p { font-size:12px; }
+}
