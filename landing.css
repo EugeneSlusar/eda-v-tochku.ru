@@ -313,3 +313,10 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 
 .lp-ticks .lp-tick-wide { flex-basis:100%; }
 @media(min-width:901px) { .lp-hero-copy .lp-ticks { color:#1f2937; font-weight:750; } .lp-hero-copy .lp-lead { color:#1f2937; } }
+
+/* Читаемость текста на фото и воздух вокруг «в точку» */
+.lp-highlight { padding:2px 12px 9px; }
+@media(min-width:901px) {
+  .lp-hero-copy .lp-lead, .lp-hero-copy .lp-ticks { text-shadow:0 0 6px #fff, 0 0 12px #fff, 0 0 22px rgba(255,255,255,.95), 0 0 36px rgba(255,255,255,.85); }
+  .lp-hero-copy .lp-lead { font-weight:550; }
+}
