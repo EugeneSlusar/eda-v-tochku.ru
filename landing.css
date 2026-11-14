@@ -310,3 +310,6 @@ h1,h2,h3,p { overflow-wrap:break-word; }
   .lp-hero-copy .lp-btn, .lp-hero-copy .lp-highlight { text-shadow:none; }
   .lp-hero-copy .lp-eyebrow { color:#c2410c; }
 }
+
+.lp-ticks .lp-tick-wide { flex-basis:100%; }
+@media(min-width:901px) { .lp-hero-copy .lp-ticks { color:#1f2937; font-weight:750; } .lp-hero-copy .lp-lead { color:#1f2937; } }
