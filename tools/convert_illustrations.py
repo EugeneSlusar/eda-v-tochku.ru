@@ -7,7 +7,6 @@ import argparse
 
 SPECS: dict[str, tuple[int, int]] = {
     "hero": (1920, 816),
-    "fridge-open": (1200, 900),
     "food-hot": (800, 600),
     "food-salads": (800, 600),
     "food-soups": (800, 600),
