@@ -340,7 +340,17 @@ h1,h2,h3,p { overflow-wrap:break-word; }
 .lp-logo img { height:54px; }
 @media(max-width:650px) { .lp-logo img { height:42px; } }
 @media(min-width:901px) {
-  .lp-hero-grid { min-height:clamp(520px,34vw,660px); }
-  .lp-slide-img { object-position:center 48%; }
+  .lp-hero-grid { min-height:clamp(540px,33vw,700px); }
+  .lp-slide-img { object-position:75% 20%; }
 }
-@media(max-width:900px) { .lp-slide-img { object-position:100% 45%; } }
+@media(max-width:900px) { .lp-slide-img { object-position:100% 40%; } }
+
+/* Узкие ноутбуки и планшеты (901–1200 px): текст над картинкой, как на телефоне, чтобы заголовок не перекрывал людей */
+@media(min-width:901px) and (max-width:1200px) {
+  .lp-slide { display:flex; flex-direction:column; }
+  .lp-hero-grid { min-height:0; }
+  .lp-hero-copy { padding:36px 0 28px; max-width:none; text-shadow:none; }
+  .lp-slide-img { position:relative; inset:auto; order:2; height:380px; object-position:100% 35%; }
+  .lp-arrow { top:auto; bottom:12px; transform:none; width:36px; height:36px; }
+  .lp-dots { bottom:22px; }
+}
