@@ -333,3 +333,9 @@ h1,h2,h3,p { overflow-wrap:break-word; }
   .lp-fridge-feature h3 { font-size:16px; }
   .lp-fridge-feature p { font-size:12px; }
 }
+
+.lp-logo img { display:block; height:44px; width:auto; }
+.lp-logo-footer img { height:40px; }
+@media(max-width:650px) { .lp-logo img { height:36px; } .lp-logo-footer img { height:34px; } }
+.lp-logo img { height:54px; }
+@media(max-width:650px) { .lp-logo img { height:42px; } }
